@@ -8,7 +8,7 @@ namespace MatricesCalculator
         {
             Console.Title = "Matrice Calculator";
 
-            Console.WriteLine("Enter the number of the operation you want to use\n1) Addition\n2) Subtraction\n3) Multiplication\n4) Inverse\n5) Transpose\n");
+            Console.WriteLine("Press the number of the operation you want to use\n1) Addition\n2) Subtraction\n3) Multiplication\n4) Inverse\n5) Transpose\n");
 
             Main:
 
@@ -67,9 +67,6 @@ namespace MatricesCalculator
         {
             // Define Variables
 
-            int i;
-            int j;
-
             Console.WriteLine("Enter the amount of rows in the matrix:\n");
 
             Rows:
@@ -116,11 +113,14 @@ namespace MatricesCalculator
 
                     // Calculate the product of the two matrixs
 
-                    for (i = 0; i < rows; i++)
+                    for (int i = 0; i < rows; i++)
                     {
-                        for (j = 0; j < columns; j++)
+                        for (int j = 0; j < columns; j++)
                         {
-                            result[i, j] = firstMatrix[i, j] * secondMatrix[i, j];
+                            for (int k = 0; k < rows; k++)
+                            {
+                                result[i, j] += firstMatrix[i, k] * secondMatrix[k, j];
+                            }
                         }
                     }
 
@@ -132,13 +132,17 @@ namespace MatricesCalculator
 
                     Console.WriteLine("\nPress enter to return to the main menu...");
 
+                    Finish:
+
                     if (Console.ReadKey().Key == ConsoleKey.Enter)
                     {
                         Console.Clear();
                         Main();
                     }
-
-                    Console.Read();
+                    else
+                    {
+                        goto Finish;
+                    }
                 }
                 else
                 {
@@ -157,9 +161,6 @@ namespace MatricesCalculator
         {
             // Define Variables
 
-            int i;
-            int j;
-
             Console.WriteLine("Enter the amount of rows in the matrix:\n");
 
             Rows:
@@ -205,9 +206,9 @@ namespace MatricesCalculator
 
                     // Calculate the sum of the two matrixs
 
-                    for (i = 0; i < rows; i++)
+                    for (int i = 0; i < rows; i++)
                     {
-                        for (j = 0; j < columns; j++)
+                        for (int j = 0; j < columns; j++)
                         {
                             result[i, j] = firstMatrix[i, j] + secondMatrix[i, j];
                         }
@@ -221,13 +222,17 @@ namespace MatricesCalculator
 
                     Console.WriteLine("\nPress enter to return to the main menu...");
 
+                    Finish:
+
                     if (Console.ReadKey().Key == ConsoleKey.Enter)
                     {
                         Console.Clear();
                         Main();
                     }
-
-                    Console.Read();
+                    else
+                    {
+                        goto Finish;
+                    }
                 }
                 else
                 {
@@ -246,9 +251,6 @@ namespace MatricesCalculator
         {
             // Define Variables
 
-            int i;
-            int j;
-
             Console.WriteLine("Enter the amount of rows in the matrix:\n");
 
             Rows:
@@ -295,9 +297,9 @@ namespace MatricesCalculator
 
                     // Calculate the sum of the two matrixs
 
-                    for (i = 0; i < rows; i++)
+                    for (int i = 0; i < rows; i++)
                     {
-                        for (j = 0; j < columns; j++)
+                        for (int j = 0; j < columns; j++)
                         {
                             result[i, j] = firstMatrix[i, j] - secondMatrix[i, j];
                         }
@@ -317,7 +319,17 @@ namespace MatricesCalculator
                         Main();
                     }
 
-                    Console.Read();
+                    Finish:
+
+                    if (Console.ReadKey().Key == ConsoleKey.Enter)
+                    {
+                        Console.Clear();
+                        Main();
+                    }
+                    else
+                    {
+                        goto Finish;
+                    }
                 }
                 else
                 {
@@ -335,9 +347,6 @@ namespace MatricesCalculator
         private static void TransposeMatrix()
         {
             // Define Variables
-
-            int i;
-            int j;
 
             Console.WriteLine("Enter the amount of rows in the matrix:\n");
 
@@ -373,9 +382,9 @@ namespace MatricesCalculator
 
                     // Calculate the transpose of the matrix
 
-                    for (i = 0; i < matrix.GetLength(0); i++)
+                    for (int i = 0; i < matrix.GetLength(0); i++)
                     {
-                        for (j = 0; j < matrix.GetLength(1); j++)
+                        for (int j = 0; j < matrix.GetLength(1); j++)
                         {
                             result[j, i] = matrix[i, j];
                         }
@@ -389,13 +398,17 @@ namespace MatricesCalculator
 
                     Console.WriteLine("\nPress enter to return to the main menu...");
 
+                    Finish:
+
                     if (Console.ReadKey().Key == ConsoleKey.Enter)
                     {
                         Console.Clear();
                         Main();
                     }
-
-                    Console.Read();
+                    else
+                    {
+                        goto Finish;
+                    }
                 }
                 else
                 {
@@ -450,9 +463,14 @@ namespace MatricesCalculator
                     // Calculate the inverse of the matrix
 
                     var topLeft = matrix[0, 0];
-                    var topRight = matrix[1, 0];
-                    var bottomLeft = matrix[0, 1];
+                    var topRight = matrix[1, 0] * -1;
+                    var bottomLeft = matrix[0, 1] * -1;
                     var bottomRight = matrix[1, 1];
+
+                    matrix[0, 0] = bottomRight;
+                    matrix[1, 0] = topRight;
+                    matrix[0, 1] = bottomLeft;
+                    matrix[1, 1] = topLeft;
 
                     var productOne = topLeft * bottomRight;
 
@@ -489,13 +507,17 @@ namespace MatricesCalculator
 
                     Console.WriteLine("\nPress enter to return to the main menu...");
 
+                    Finish:
+
                     if (Console.ReadKey().Key == ConsoleKey.Enter)
                     {
                         Console.Clear();
                         Main();
                     }
-
-                    Console.Read();
+                    else
+                    {
+                        goto Finish;
+                    }
                 }
                 else
                 {
